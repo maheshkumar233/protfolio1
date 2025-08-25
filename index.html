@@ -27,27 +27,40 @@
             height: 100%;
             z-index: -1;
         }
-        /* Custom Cursor */
+        /* New Custom Cursor */
         #custom-cursor {
             position: fixed;
-            width: 32px;
-            height: 32px;
+            left: 0;
+            top: 0;
+            width: 28px;
+            height: 28px;
             border: 2px solid #64ffda;
             border-radius: 50%;
             pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, border-color 0.3s;
+            will-change: transform;
             z-index: 10000;
+            transition: width 0.3s ease, height 0.3s ease, border-width 0.3s ease, background-color 0.3s ease;
         }
-        #cursor-dot {
-            position: fixed;
+        #custom-cursor::after {
+            content: '';
+            position: absolute;
             width: 6px;
             height: 6px;
             background-color: #64ffda;
             border-radius: 50%;
-            pointer-events: none;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 10001;
+            transition: opacity 0.3s ease;
+        }
+        #custom-cursor.hover {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(100, 255, 218, 0.1);
+            border-width: 1px;
+        }
+        #custom-cursor.hover::after {
+            opacity: 0;
         }
         .accent-color {
             color: #64ffda;
@@ -96,11 +109,32 @@
             display: inline-block;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        .form-input {
+            background-color: #0a192f;
+            border: 1px solid #444;
+            color: #E2E2E2;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #64ffda;
+        }
+        /* 3D Button Effect */
+        .btn-3d {
+            transition: transform 0.2s, box-shadow 0.2s;
+            will-change: transform;
+        }
+        .btn-3d:hover {
+            transform: translateY(-2px);
+        }
+        .btn-3d:active {
+            transform: translateY(2px);
+            box-shadow: none !important;
+        }
     </style>
 </head>
 <body class="antialiased">
     <div id="custom-cursor"></div>
-    <div id="cursor-dot"></div>
     <canvas id="bg-canvas"></canvas>
 
     <!-- Header -->
@@ -109,10 +143,10 @@
             <a href="#" class="text-2xl font-bold text-white magnetic-item">MKS<span class="text-5xl accent-color">.</span></a>
             <!-- Desktop Nav -->
             <div class="hidden md:flex items-center space-x-6 text-lg">
-                 <a href="#projects" class="text-gray-300 hover:text-white transition-colors magnetic-item">Work</a>
-                 <a href="#experience" class="text-gray-300 hover:text-white transition-colors magnetic-item">Experience</a>
-                 <a href="#skills" class="text-gray-300 hover:text-white transition-colors magnetic-item">Skills</a>
-                 <a href="#contact" class="border border-gray-600 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors duration-300 magnetic-item">Contact</a>
+                <a href="#projects" class="text-gray-300 hover:text-white transition-colors magnetic-item">Work</a>
+                <a href="#experience" class="text-gray-300 hover:text-white transition-colors magnetic-item">Experience</a>
+                <a href="#skills" class="text-gray-300 hover:text-white transition-colors magnetic-item">Skills</a>
+                <a href="#contact" class="border border-gray-600 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors duration-300 magnetic-item">Contact</a>
             </div>
             <!-- Mobile Menu Button -->
             <button id="mobile-menu-button" class="md:hidden text-white z-50 magnetic-item">
@@ -271,7 +305,20 @@
             <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-lg text-gray-300">
                 <div class="text-center"><i data-lucide="cpu" class="mx-auto h-10 w-10 accent-color"></i><h3 class="mt-4 font-bold text-white">Embedded Systems</h3><p class="text-gray-400">C, Python, Arduino, ESP32, STM32</p></div>
                 <div class="text-center"><i data-lucide="move-3d" class="mx-auto h-10 w-10 accent-color"></i><h3 class="mt-4 font-bold text-white">CAD & Simulation</h3><p class="text-gray-400">SolidWorks, AutoCAD, Simulink</p></div>
-                <div class="text-center"><i data-lucide="robot" class="mx-auto h-10 w-10 accent-color"></i><h3 class="mt-4 font-bold text-white">Robotics</h3><p class="text-gray-400">PID Control, Motor Drivers, Sensor Fusion</p></div>
+                <div class="text-center">
+                    <!-- Custom SVG Robot Icon -->
+                    <svg class="mx-auto h-10 w-10 accent-color" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 8.5V6.5C15 5.12 13.88 4 12.5 4H11.5C10.12 4 9 5.12 9 6.5V8.5"/>
+                        <path d="M12 18.5V14.5"/>
+                        <path d="M12 12C10.62 12 9.5 13.12 9.5 14.5V16.5H14.5V14.5C14.5 13.12 13.38 12 12 12Z"/>
+                        <path d="M9 16.5H4.5V20H9"/>
+                        <path d="M15 16.5H19.5V20H15"/>
+                        <path d="M7 12L4.5 9.5"/>
+                        <path d="M17 12L19.5 9.5"/>
+                    </svg>
+                    <h3 class="mt-4 font-bold text-white">Robotics</h3>
+                    <p class="text-gray-400">PID Control, Motor Drivers, Sensor Fusion</p>
+                </div>
                 <div class="text-center"><i data-lucide="circuit-board" class="mx-auto h-10 w-10 accent-color"></i><h3 class="mt-4 font-bold text-white">PCB Design</h3><p class="text-gray-400">EasyEDA, TinkerCAD</p></div>
                 <div class="text-center"><i data-lucide="cloud-cog" class="mx-auto h-10 w-10 accent-color"></i><h3 class="mt-4 font-bold text-white">IoT Frameworks</h3><p class="text-gray-400">Firebase, Blynk, ThingSpeak</p></div>
                 <div class="text-center"><i data-lucide="github" class="mx-auto h-10 w-10 accent-color"></i><h3 class="mt-4 font-bold text-white">Development Tools</h3><p class="text-gray-400">Git, VS Code, MATLAB</p></div>
@@ -284,14 +331,66 @@
     <footer id="contact" class="py-24 md:py-32 text-center border-t border-gray-800 fade-in-up relative z-10">
         <h2 class="text-4xl md:text-5xl font-extrabold tracking-tighter text-white">Let's Build Together</h2>
         <p class="mt-6 text-xl text-gray-400 max-w-2xl mx-auto">I'm actively looking for new opportunities. If you have a project in mind or just want to connect, feel free to reach out.</p>
-        <a href="mailto:mahesh2332005@gmail.com" class="mt-10 inline-block bg-accent-color text-black px-10 py-4 rounded-full text-xl font-bold hover:scale-105 transition-transform duration-300 magnetic-item">Get In Touch</a>
-        <div class="flex justify-center space-x-8 mt-16">
+        <button id="open-contact-modal" class="mt-10 inline-block bg-accent-color text-black px-10 py-4 rounded-full text-xl font-bold transition-transform duration-300 magnetic-item btn-3d">Get In Touch</button>
+        <div class="flex justify-center space-x-6 md:space-x-8 mt-16">
             <a href="https://linkedin.com/in/maheshkumar23" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors magnetic-item"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors magnetic-item"><i data-lucide="github" class="w-8 h-8"></i></a>
+            <a href="https://github.com/maheshkumar233" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors magnetic-item"><i data-lucide="github" class="w-8 h-8"></i></a>
+            <a href="mailto:mahesh2332005@gmail.com" class="text-gray-500 hover:text-white transition-colors magnetic-item"><i data-lucide="mail" class="w-8 h-8"></i></a>
             <a href="tel:+917010099085" class="text-gray-500 hover:text-white transition-colors magnetic-item"><i data-lucide="phone" class="w-8 h-8"></i></a>
         </div>
         <p class="text-sm text-gray-600 mt-16">Designed & Built by Mahesh Kumar S the robosage</p>
     </footer>
+
+    <!-- Contact Form Modal -->
+    <div id="contact-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] hidden p-4">
+        <div class="bg-[#0a192f] p-8 rounded-lg shadow-2xl w-full max-w-lg relative border border-gray-700">
+            <button id="close-contact-modal" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="form-content">
+                <h2 class="text-2xl font-bold text-white mb-6">Contact Me</h2>
+                <form id="contact-form" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
+                        <input type="text" id="name" name="name" required class="form-input w-full px-4 py-2 rounded-md">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                        <input type="email" id="email" name="email" required class="form-input w-full px-4 py-2 rounded-md">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-400 mb-1">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required class="form-input w-full px-4 py-2 rounded-md">
+                    </div>
+                    <div>
+                        <label for="designation" class="block text-sm font-medium text-gray-400 mb-1">Designation</label>
+                        <select id="designation" name="designation" required class="form-input w-full px-4 py-2 rounded-md appearance-none" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364ffda%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: .65em auto;">
+                            <option>Student</option>
+                            <option>Teacher</option>
+                            <option>Recruiter</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="other-designation-wrapper" class="hidden">
+                        <label for="other-designation" class="block text-sm font-medium text-gray-400 mb-1">Please Specify</label>
+                        <input type="text" id="other-designation" name="other-designation" class="form-input w-full px-4 py-2 rounded-md">
+                    </div>
+                    <div>
+                        <label for="purpose" class="block text-sm font-medium text-gray-400 mb-1">Purpose of Contacting</label>
+                        <textarea id="purpose" name="purpose" rows="4" required class="form-input w-full px-4 py-2 rounded-md"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-accent-color text-black px-6 py-3 rounded-md text-lg font-bold transition-transform duration-300 btn-3d">Send Message</button>
+                    </div>
+                </form>
+            </div>
+            <div id="success-message" class="hidden text-center">
+                <i data-lucide="check-circle" class="mx-auto h-16 w-16 accent-color"></i>
+                <h2 class="text-2xl font-bold text-white mt-4">Thank You!</h2>
+                <p class="text-gray-400 mt-2">Your message has been sent successfully. I'll get back to you soon.</p>
+            </div>
+        </div>
+    </div>
     
     <style>
         .tag { display: inline-block; background-color: rgba(100, 255, 218, 0.1); color: #64ffda; padding: 4px 12px; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; }
@@ -301,33 +400,38 @@
         // Initialize lucide icons
         lucide.createIcons();
 
-        // --- Custom Cursor & Magnetic Effect ---
+        // --- New, Optimized Custom Cursor & Magnetic Effect ---
         const cursor = document.getElementById('custom-cursor');
-        const cursorDot = document.getElementById('cursor-dot');
         const magneticItems = document.querySelectorAll('.magnetic-item');
         const magneticStrength = 0.4;
 
+        let mouseX = 0, mouseY = 0;
         let cursorX = 0, cursorY = 0;
-        let dotX = 0, dotY = 0;
 
         window.addEventListener('mousemove', (e) => {
-            cursorX = e.clientX;
-            cursorY = e.clientY;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
         function animateCursor() {
-            gsap.to(cursor, { duration: 0.6, x: cursorX, y: cursorY, ease: "power3.out" });
-            gsap.to(dot, { duration: 0.3, x: cursorX, y: cursorY, ease: "power3.out" });
+            // Smoother interpolation (lerp) for the cursor position
+            cursorX += (mouseX - cursorX) * 0.12;
+            cursorY += (mouseY - cursorY) * 0.12;
+
+            // Update position using transform for better performance
+            cursor.style.transform = `translate3d(${cursorX - cursor.clientWidth / 2}px, ${cursorY - cursor.clientHeight / 2}px, 0)`;
+
             requestAnimationFrame(animateCursor);
         }
-        
+        animateCursor(); // Start the animation loop
+
         magneticItems.forEach(item => {
             item.addEventListener('mouseenter', function() {
-                gsap.to(cursor, {duration: 0.3, scale: 1.5, borderColor: '#fff' });
+                cursor.classList.add('hover');
             });
 
             item.addEventListener('mouseleave', function() {
-                gsap.to(cursor, {duration: 0.3, scale: 1, borderColor: '#64ffda' });
+                cursor.classList.remove('hover');
                 gsap.to(this, { duration: 0.3, x: 0, y: 0, ease: 'power3.out' });
             });
 
@@ -434,29 +538,77 @@
             renderer.render(scene, camera);
         }
         
-        // Start all animations
-        initThreeJS();
+        initThreeJS(); // Start Three.js background
         
-        const cursorEl = document.getElementById('custom-cursor');
-        const dot = document.getElementById('cursor-dot');
-        let mouseX = 0, mouseY = 0;
-        let posX = 0, posY = 0;
+        // --- Contact Modal & AJAX Form Submission Logic ---
+        const openModalBtn = document.getElementById('open-contact-modal');
+        const closeModalBtn = document.getElementById('close-contact-modal');
+        const contactModal = document.getElementById('contact-modal');
+        const designationSelect = document.getElementById('designation');
+        const otherDesignationWrapper = document.getElementById('other-designation-wrapper');
+        const otherDesignationInput = document.getElementById('other-designation');
+        const contactForm = document.getElementById('contact-form');
+        const formContent = document.getElementById('form-content');
+        const successMessage = document.getElementById('success-message');
 
-        window.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+        openModalBtn.addEventListener('click', () => {
+            contactModal.classList.remove('hidden');
+            formContent.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+            contactForm.reset(); // Reset form on open
         });
 
-        gsap.to({}, 0.016, {
-            repeat: -1,
-            onRepeat: function() {
-                posX += (mouseX - posX) / 6;
-                posY += (mouseY - posY) / 6;
-                gsap.set(cursorEl, { css: { left: posX, top: posY } });
-                gsap.set(dot, { css: { left: mouseX, top: mouseY } });
+        closeModalBtn.addEventListener('click', () => {
+            contactModal.classList.add('hidden');
+        });
+        
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                contactModal.classList.add('hidden');
             }
+        });
+
+        designationSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'Other') {
+                otherDesignationWrapper.classList.remove('hidden');
+                otherDesignationInput.required = true;
+            } else {
+                otherDesignationWrapper.classList.add('hidden');
+                otherDesignationInput.required = false;
+            }
+        });
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            const formAction = "https://formspree.io/f/mpwjakoz";
+
+            fetch(formAction, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    formContent.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    lucide.createIcons(); // Re-render icons for the success message
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            alert(data["errors"].map(error => error["message"]).join(", "));
+                        } else {
+                            alert('Oops! There was a problem submitting your form');
+                        }
+                    })
+                }
+            }).catch(error => {
+                alert('Oops! There was a problem submitting your form');
+            });
         });
 
     </script>
 </body>
 </html>
+

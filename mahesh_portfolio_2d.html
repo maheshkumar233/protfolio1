@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahesh Kumar S — Mechatronics Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root { --transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+
+  [data-theme="dark"] {
+    --bg:#0a0a0a; --bg2:#111; --bg3:#1a1a1a;
+    --accent:#e0001a; --accent2:#ff3347;
+    --text:#f0f0f0; --text2:#aaa; --text3:#555;
+    --border:#2a2a2a; --card:#141414;
+    --glow:rgba(224,0,26,0.18); --glow2:rgba(224,0,26,0.06);
+    --nav-bg:rgba(10,10,10,0.95);
+    --tag-bg:rgba(224,0,26,0.1); --tag-border:rgba(224,0,26,0.28);
+    --modal-bg:rgba(0,0,0,0.85);
+    --input-bg:#1e1e1e; --input-border:#333;
+  }
+  [data-theme="light"] {
+    --bg:#f2f6ff; --bg2:#e8eeff; --bg3:#dce6ff;
+    --accent:#0044cc; --accent2:#0055ff;
+    --text:#080e20; --text2:#4a5580; --text3:#9aa5c4;
+    --border:#c2d0f0; --card:#ffffff;
+    --glow:rgba(0,68,204,0.14); --glow2:rgba(0,68,204,0.05);
+    --nav-bg:rgba(242,246,255,0.95);
+    --tag-bg:rgba(0,68,204,0.07); --tag-border:rgba(0,68,204,0.22);
+    --modal-bg:rgba(0,10,40,0.75);
+    --input-bg:#f8faff; --input-border:#c2d0f0;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;transition:background var(--transition),color var(--transition)}
+  ::-webkit-scrollbar{width:3px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+  /* ── NAV ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:0 5%;height:58px;display:flex;align-items:center;justify-content:space-between;transition:background var(--transition),border-color var(--transition)}
+  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.1em;color:var(--accent);text-decoration:none}
+  .nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--text2);text-decoration:none;letter-spacing:.06em;transition:color .2s}
+  .nav-links a:hover{color:var(--accent)}
+  .theme-wrap{display:flex;align-items:center;gap:8px}
+  .theme-lbl{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text3);letter-spacing:.08em;min-width:36px}
+  .theme-btn{width:46px;height:25px;background:var(--border);border-radius:13px;border:none;cursor:pointer;position:relative;transition:background .3s;flex-shrink:0}
+  .theme-btn::after{content:'';position:absolute;top:3px;left:3px;width:19px;height:19px;background:var(--accent);border-radius:50%;transition:transform .3s}
+  [data-theme="light"] .theme-btn::after{transform:translateX(21px)}
+
+  /* ── HERO ── */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:80px 5% 60px;position:relative;overflow:hidden}
+  .hero-bg-word{position:absolute;right:-1%;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(7rem,17vw,19rem);color:transparent;-webkit-text-stroke:1px var(--border);letter-spacing:-.02em;user-select:none;pointer-events:none;line-height:.88;opacity:.55}
+  .hero-inner{display:grid;grid-template-columns:1fr 400px;gap:4rem;align-items:center;width:100%;max-width:1200px;margin:0 auto}
+  .hero-content{position:relative;z-index:2}
+
+  .hero-pill{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.14em;color:var(--accent);border:1px solid var(--accent);padding:5px 14px;border-radius:2px;margin-bottom:1.6rem;opacity:0;animation:fadeUp .6s .2s forwards}
+  .hero-pill-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.4s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+  .hero-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,7.5vw,7.5rem);line-height:.9;letter-spacing:.01em;margin-bottom:1rem;opacity:0;animation:fadeUp .7s .35s forwards}
+  .hero-name em{color:var(--accent);font-style:normal}
+  .hero-role{font-family:'Space Mono',monospace;font-size:clamp(.7rem,1.3vw,.88rem);color:var(--text2);letter-spacing:.07em;margin-bottom:1.6rem;opacity:0;animation:fadeUp .7s .5s forwards;line-height:1.6}
+  .hero-bio{font-size:.95rem;color:var(--text2);line-height:1.8;max-width:480px;margin-bottom:2.5rem;opacity:0;animation:fadeUp .7s .65s forwards}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .8s forwards}
+
+  .btn-pri{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:#fff;background:var(--accent);border:none;padding:13px 28px;cursor:pointer;text-decoration:none;display:inline-block;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:transform .2s,box-shadow .2s}
+  .btn-pri:hover{transform:translateY(-3px);box-shadow:0 10px 35px var(--glow)}
+  .btn-sec{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--accent);background:transparent;border:1px solid var(--accent);padding:13px 28px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s}
+  .btn-sec:hover{background:var(--tag-bg)}
+
+  .hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);opacity:0;animation:fadeUp .7s 1s forwards}
+  .stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--accent);line-height:1;display:block}
+  .stat-l{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+
+  /* ── PHOTO ── */
+  .hero-photo-wrap{position:relative;z-index:2;opacity:0;animation:fadeIn 1s .5s forwards}
+  .photo-frame{position:relative;width:350px;height:430px;margin:0 auto;background:var(--bg3)}
+  .photo-frame::before{content:'';position:absolute;inset:-14px;border:2px solid var(--accent);z-index:-1;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px))}
+  .photo-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,var(--glow) 0%,transparent 55%);z-index:1;pointer-events:none}
+  .photo-img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));filter:grayscale(10%) contrast(1.05);transition:filter .4s}
+  .photo-img:hover{filter:grayscale(0%) contrast(1.12)}
+  .photo-accent-bar{position:absolute;bottom:-24px;left:20px;right:-20px;height:3px;background:linear-gradient(to right,var(--accent),transparent)}
+  /* fallback initials shown while image loads */
+  .photo-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,22px 100%,0 calc(100% - 22px));background:var(--bg3);z-index:0}
+  .photo-fallback span{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--accent);line-height:1}
+  .photo-fallback p{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text3);letter-spacing:.15em;margin-top:.5rem}
+
+  /* ── SCROLL CUE ── */
+  .scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeIn 1s 1.6s forwards}
+  .scroll-cue span{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--text3);letter-spacing:.16em}
+  .scroll-line{width:1px;height:42px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollPulse 2s ease-in-out infinite}
+  @keyframes scrollPulse{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.3;transform:scaleY(.6)}}
+
+  /* ── LAYOUT ── */
+  .sw{padding:100px 5%;max-width:1200px;margin:0 auto}
+  .sec-label{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:10px}
+  .sec-label::after{content:'';flex:1;max-width:56px;height:1px;background:var(--accent);opacity:.5}
+  .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,5vw,4.2rem);letter-spacing:.02em;margin-bottom:3rem;line-height:.95}
+  .stripe{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background var(--transition),border-color var(--transition)}
+  .hr{width:90%;margin:0 auto;height:1px;background:linear-gradient(to right,transparent,var(--accent),transparent);opacity:.25}
+
+  /* ── SKILLS ── */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem}
+  .skill-card{background:var(--card);border:1px solid var(--border);padding:1.8rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,background var(--transition);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+  .skill-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height .4s}
+  .skill-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+  .skill-card:hover::before{height:100%}
+  .sk-title{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:1rem}
+  .tags{display:flex;flex-wrap:wrap;gap:.5rem}
+  .tag{background:var(--tag-bg);border:1px solid var(--tag-border);color:var(--text);font-family:'Space Mono',monospace;font-size:.63rem;padding:4px 10px;border-radius:2px;letter-spacing:.04em;transition:background var(--transition),border-color var(--transition)}
+
+  /* ── PROJECTS ── */
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+  .proj-card{background:var(--card);border:1px solid var(--border);padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s,background var(--transition)}
+  .proj-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--glow2),transparent);opacity:0;transition:opacity .3s;pointer-events:none}
+  .proj-card:hover{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 22px 65px var(--glow)}
+  .proj-card:hover::after{opacity:1}
+  .proj-num{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;color:var(--border);line-height:1;position:absolute;top:.8rem;right:1.4rem;transition:color .3s,opacity .3s;user-select:none}
+  .proj-card:hover .proj-num{color:var(--accent);opacity:.25}
+  .proj-badge{display:inline-block;background:var(--accent);color:#fff;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;padding:3px 9px;margin-bottom:1rem;line-height:1.6}
+  .proj-title{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.03em;margin-bottom:.8rem;line-height:1.1}
+  .proj-desc{font-size:.87rem;color:var(--text2);line-height:1.72}
+  .proj-stack{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+  .proj-stack span{background:var(--bg3);border:1px solid var(--border);color:var(--text3);font-family:'Space Mono',monospace;font-size:.58rem;padding:2px 8px;border-radius:2px;letter-spacing:.04em;transition:background var(--transition)}
+
+  /* ── TIMELINE ── */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),transparent)}
+  .tl-item{position:relative;margin-bottom:3.2rem;padding-bottom:3.2rem;border-bottom:1px solid var(--border)}
+  .tl-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .tl-dot{position:absolute;left:-2.4rem;top:5px;width:11px;height:11px;background:var(--accent);border:2px solid var(--bg);border-radius:50%;box-shadow:0 0 14px var(--accent);transition:border-color var(--transition)}
+  .tl-meta{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.1em;color:var(--accent);margin-bottom:.5rem}
+  .tl-role{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.02em;margin-bottom:.25rem}
+  .tl-company{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--text2);margin-bottom:1rem;letter-spacing:.05em}
+  .tl-list{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+  .tl-list li{font-size:.88rem;color:var(--text2);padding-left:1.3rem;position:relative;line-height:1.7}
+  .tl-list li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.68rem;top:2px}
+
+  /* ── ACHIEVEMENTS ── */
+  .ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.2rem}
+  .ach-card{background:var(--card);border:1px solid var(--border);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .3s,transform .3s,background var(--transition)}
+  .ach-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+  .ach-icon{font-size:1.6rem;flex-shrink:0;margin-top:1px}
+  .ach-title{font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;margin-bottom:.35rem;letter-spacing:.04em;line-height:1.4}
+  .ach-desc{font-size:.82rem;color:var(--text2);line-height:1.6}
+
+  /* ── EDUCATION ── */
+  .edu-grid{display:grid;gap:1.4rem}
+  .edu-card{background:var(--card);border:1px solid var(--border);padding:2rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;transition:border-color .3s,background var(--transition);clip-path:polygon(0 0,calc(100% - 22px) 0,100% 22px,100% 100%,0 100%)}
+  .edu-card:hover{border-color:var(--accent)}
+  .edu-deg{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.02em;margin-bottom:.35rem}
+  .edu-school{font-size:.9rem;color:var(--text2);margin-bottom:.4rem;line-height:1.5}
+  .edu-courses{font-size:.76rem;color:var(--text3);font-style:italic;line-height:1.6}
+  .edu-score{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;color:var(--accent);text-align:right;line-height:1;white-space:nowrap}
+  .edu-score span{display:block;font-family:'Space Mono',monospace;font-size:.58rem;color:var(--text3);letter-spacing:.1em;margin-top:2px}
+
+  /* ── CONTACT SECTION ── */
+  .contact-box{background:var(--card);border:1px solid var(--border);padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;clip-path:polygon(0 0,calc(100% - 30px) 0,100% 30px,100% 100%,30px 100%,0 calc(100% - 30px));transition:background var(--transition),border-color var(--transition)}
+  .contact-info{display:flex;flex-direction:column;gap:1.2rem}
+  .ci-item{display:flex;align-items:center;gap:1rem;padding:.75rem;border:1px solid transparent;transition:border-color .2s;border-radius:2px}
+  .ci-item:hover{border-color:var(--border)}
+  .ci-icon{width:38px;height:38px;background:var(--tag-bg);border:1px solid var(--tag-border);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:background var(--transition),border-color var(--transition)}
+  .ci-detail{font-size:.87rem;color:var(--text2);line-height:1.5}
+  .ci-detail strong{display:block;font-size:.65rem;font-family:'Space Mono',monospace;color:var(--text3);letter-spacing:.1em;margin-bottom:3px}
+  .ci-detail a{color:var(--accent);text-decoration:none}
+  .ci-detail a:hover{text-decoration:underline}
+  .contact-cta{display:flex;flex-direction:column;justify-content:center;gap:1.5rem}
+  .cc-headline{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1.08}
+  .cc-headline em{color:var(--accent);font-style:normal}
+  .cc-sub{font-size:.88rem;color:var(--text2);line-height:1.72}
+
+  /* ── MODAL ── */
+  .modal-overlay{display:none;position:fixed;inset:0;background:var(--modal-bg);backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:1rem}
+  .modal-overlay.open{display:flex}
+  .modal{background:#0d1626;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:2.2rem 2rem;width:100%;max-width:520px;position:relative;max-height:90vh;overflow-y:auto;animation:modalIn .3s ease}
+  [data-theme="light"] .modal{background:#ffffff;border-color:var(--border)}
+  @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:var(--text2);font-size:1.4rem;cursor:pointer;line-height:1;transition:color .2s}
+  .modal-close:hover{color:var(--accent)}
+  .modal-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;margin-bottom:.3rem;color:var(--text)}
+  .modal-sub{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);letter-spacing:.1em;margin-bottom:1.8rem}
+  .form-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.2rem}
+  .form-group label{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text2);text-transform:uppercase}
+  .form-group input,
+  .form-group select,
+  .form-group textarea{background:var(--input-bg);border:1px solid var(--input-border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.92rem;padding:.75rem 1rem;border-radius:4px;width:100%;outline:none;transition:border-color .2s,background var(--transition)}
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus{border-color:var(--accent)}
+  .form-group select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23e0001a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center}
+  [data-theme="light"] .form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230044cc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")}
+  .form-group textarea{resize:vertical;min-height:100px;line-height:1.6}
+  .form-group select option{background:#0d1626;color:var(--text)}
+  [data-theme="light"] .form-group select option{background:#fff}
+  .btn-submit{width:100%;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.12em;color:#fff;background:var(--accent);border:none;cursor:pointer;border-radius:4px;transition:transform .2s,box-shadow .2s;margin-top:.5rem}
+  .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px var(--glow)}
+  .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .form-msg{font-family:'Space Mono',monospace;font-size:.7rem;text-align:center;padding:.6rem;margin-top:.8rem;border-radius:3px;display:none}
+  .form-msg.success{display:block;background:rgba(0,200,100,.1);color:#00c864;border:1px solid rgba(0,200,100,.3)}
+  .form-msg.error{display:block;background:rgba(224,0,26,.1);color:var(--accent);border:1px solid var(--tag-border)}
+
+  /* ── FOOTER ── */
+  footer{background:var(--bg2);border-top:1px solid var(--border);padding:1.8rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;transition:background var(--transition),border-color var(--transition)}
+  .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--accent);letter-spacing:.08em}
+  .footer-text{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text3);letter-spacing:.07em}
+
+  /* ── REVEAL ANIMATIONS ── */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.vis{opacity:1;transform:translateY(0)}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}.d7{transition-delay:.56s}.d8{transition-delay:.64s}
+
+  /* ── CURSOR GLOW ── */
+  #cglow{width:320px;height:320px;background:radial-gradient(circle,var(--glow),transparent 70%);position:fixed;pointer-events:none;z-index:0;transform:translate(-50%,-50%);border-radius:50%;mix-blend-mode:screen}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+  /* ── MOBILE ── */
+  @media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr}
+    .hero-photo-wrap{order:-1;margin-bottom:1.5rem}
+    .photo-frame{width:240px;height:290px}
+    .nav-links{display:none}
+    .contact-box{grid-template-columns:1fr}
+    .sw{padding:60px 5%}
+    .hero-bg-word{font-size:5rem;opacity:.18}
+    .projects-grid{grid-template-columns:1fr}
+    footer{flex-direction:column;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<div id="cglow"></div>
+
+<!-- ════ MODAL ════ -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Contact Form">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-title">Contact Me</div>
+    <div class="modal-sub">FILL IN YOUR DETAILS &amp; I'LL GET BACK TO YOU</div>
+
+    <form id="contactForm" action="https://formspree.io/f/mpwjakoz" method="POST">
+      <div class="form-group">
+        <label for="fname">Name</label>
+        <input type="text" id="fname" name="name" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="femail">Email</label>
+        <input type="email" id="femail" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="fphone">Phone Number</label>
+        <input type="tel" id="fphone" name="phone" placeholder="+91 00000 00000">
+      </div>
+      <div class="form-group">
+        <label for="fdesig">Designation</label>
+        <select id="fdesig" name="designation">
+          <option value="Student">Student</option>
+          <option value="Recruiter">Recruiter</option>
+          <option value="Engineer">Engineer</option>
+          <option value="Professor">Professor</option>
+          <option value="Entrepreneur">Entrepreneur</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fpurpose">Purpose of Contacting</label>
+        <textarea id="fpurpose" name="message" placeholder="Tell me about your opportunity, project, or query..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit" id="submitBtn">Send Message</button>
+      <div class="form-msg" id="formMsg"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ════ NAV ════ -->
+<nav>
+  <a href="#hero" class="nav-logo">MK.S</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Awards</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="theme-wrap">
+    <span class="theme-lbl" id="tlbl">DARK</span>
+    <button class="theme-btn" id="tBtn" aria-label="Toggle theme"></button>
+  </div>
+</nav>
+
+<!-- ════ HERO ════ -->
+<div id="hero" style="position:relative;overflow:hidden">
+  <div class="hero">
+    <div class="hero-bg-word">MECHA<br>TRONICS</div>
+    <div class="hero-inner">
+
+      <div class="hero-content">
+        <div class="hero-pill"><span class="hero-pill-dot"></span>OPEN TO OPPORTUNITIES</div>
+        <h1 class="hero-name">MAHESH<br><em>KUMAR</em> S</h1>
+        <p class="hero-role">B.TECH MECHATRONICS &nbsp;·&nbsp; EMBEDDED SYSTEMS<br>ROBOTICS &nbsp;·&nbsp; IoT &nbsp;·&nbsp; PCB DESIGN</p>
+        <p class="hero-bio">Dedicated engineer with a solid background in embedded systems, CAD modeling, PCB design, Arduino prototyping, and engineering simulation. Building real-world solutions at the intersection of hardware and software.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-pri">VIEW PROJECTS</a>
+          <a href="#contact" class="btn-sec">GET IN TOUCH</a>
+        </div>
+        <div class="hero-stats">
+          <div><span class="stat-n">8+</span><span class="stat-l">Projects</span></div>
+          <div><span class="stat-n">5+</span><span class="stat-l">Awards</span></div>
+          <div><span class="stat-n">3</span><span class="stat-l">Internships</span></div>
+          <div><span class="stat-n">SIH</span><span class="stat-l">Winner '23</span></div>
+        </div>
+      </div>
+
+      <div class="hero-photo-wrap">
+        <div class="photo-frame">
+          <!-- fallback shown while image loads -->
+          <div class="photo-fallback" id="photoFallback">
+            <span>MK</span>
+            <p>LOADING...</p>
+          </div>
+          <img id="heroPhoto"
+               src="https://res.cloudinary.com/dfol7xlwr/image/upload/v1753001644/WhatsApp_Image_2025-07-20_at_13.52.54_c81f6d16_lntz11.jpg"
+               alt="Mahesh Kumar S"
+               class="photo-img"
+              
+               style="position:relative;z-index:2">
+          <div class="photo-accent-bar"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="scroll-cue">
+      <span>SCROLL</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ════ SKILLS ════ -->
+<div class="stripe" id="skills">
+  <div class="sw">
+    <div class="sec-label reveal">01 — EXPERTISE</div>
+    <h2 class="sec-title reveal">TECHNICAL<br>SKILLS</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal d1">
+        <div class="sk-title">⚙ Programming &amp; Embedded</div>
+        <div class="tags">
+          <span class="tag">Embedded C</span><span class="tag">Python</span>
+          <span class="tag">Arduino IDE</span><span class="tag">MATLAB</span>
+          <span class="tag">PID Control</span><span class="tag">Sensor Integration</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="sk-title">🔌 Hardware Platforms</div>
+        <div class="tags">
+          <span class="tag">Arduino</span><span class="tag">ESP32</span>
+          <span class="tag">ESP32-S3</span><span class="tag">STM32</span>
+          <span class="tag">Raspberry Pi</span><span class="tag">Motor Drivers</span>
+          <span class="tag">I2C / SPI</span><span class="tag">PCB Design</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d3">
+        <div class="sk-title">🎨 Design &amp; Simulation</div>
+        <div class="tags">
+          <span class="tag">SolidWorks</span><span class="tag">AutoCAD</span>
+          <span class="tag">EasyEDA</span><span class="tag">TinkerCAD</span>
+          <span class="tag">Simulink</span>
+        </div>
+      </div>
+      <div class="skill-card reveal d4">
+        <div class="sk-title">🛠 Tools &amp; Frameworks</div>
+        <div class="tags">
+          <span class="tag">GitHub</span><span class="tag">VS Code</span>
+          <span class="tag">ThingSpeak</span><span class="tag">Blynk</span>
+          <span class="tag">Firebase</span><span class="tag">GIS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ════ PROJECTS ════ -->
+<div id="projects">
+  <div class="sw">
+    <div class="sec-label reveal">02 — BUILDS</div>
+    <h2 class="sec-title reveal">PROJECT<br>EXPERIENCE</h2>
+    <div class="projects-grid">
+
+      <div class="proj-card reveal d1">
+        <div class="proj-num">01</div>
+        <div class="proj-badge">🏆 SIH 2023 — NATIONAL WINNER</div>
+        <div class="proj-title">Borewell Rescue Robot</div>
+        <p class="proj-desc">Engineered a vertical descent robot with a mechanical soft gripper arm and live video feed to rescue children trapped in borewells. Controlled via wired interface, designed for narrow-diameter shafts. Won 1st place at SIH 2023 — outperformed 500+ teams nationally.</p>
+        <div class="proj-stack"><span>Arduino</span><span>Embedded C</span><span>Servo Motors</span><span>Camera Module</span></div>
+      </div>
+
+      <div class="proj-card reveal d2">
+        <div class="proj-num">02</div>
+        <div class="proj-badge">🐾 Robotics · ESP32-S3 · PCB</div>
+        <div class="proj-title">Wi-Fi Quadruped Robot</div>
+        <p class="proj-desc">Designed and built a four-legged robotic puppy controlled over Wi-Fi using an ESP32-S3 microcontroller. Custom PCB designed for compact servo control with MG90S servos for precise gait motion. Capable of walking, turning, and posture control via web interface.</p>
+        <div class="proj-stack"><span>ESP32-S3</span><span>MG90S Servos</span><span>PCB Design</span><span>EasyEDA</span><span>Wi-Fi</span></div>
+      </div>
+
+      <div class="proj-card reveal d3">
+        <div class="proj-num">03</div>
+        <div class="proj-badge">🤖 Top 20 — SAE TIFAN 2026</div>
+        <div class="proj-title">Gantry Pick-and-Place System</div>
+        <p class="proj-desc">Engineered a fully automated gantry pick-and-place machine combining electronics and mechanical design for the SAE TIFAN 2026 challenge. Achieved Top 20 nationally. System handles precision object handling with stepper motor-driven axes and custom end-effector.</p>
+        <div class="proj-stack"><span>Stepper Motors</span><span>SolidWorks</span><span>Arduino</span><span>Embedded C</span></div>
+      </div>
+
+      <div class="proj-card reveal d4">
+        <div class="proj-num">04</div>
+        <div class="proj-badge">🏙 🥈 2nd Place — National · Unplugged 2.0</div>
+        <div class="proj-title">Smart City Automation Model</div>
+        <p class="proj-desc">Built an intelligent city automation model using IoT, AI, and GIS technologies. Integrated ESP32-CAM for surveillance, ThingSpeak for data visualization, and AI-based decision making for traffic and energy management. Awarded 2nd place at the national-level Unplugged 2.0 competition.</p>
+        <div class="proj-stack"><span>ESP32-CAM</span><span>IoT</span><span>AI</span><span>ThingSpeak</span><span>GIS</span></div>
+      </div>
+
+      <div class="proj-card reveal d5">
+        <div class="proj-num">05</div>
+        <div class="proj-badge">IoT · ESP32 · Firebase</div>
+        <div class="proj-title">Smart Extension Box</div>
+        <p class="proj-desc">Designed a portable extension box with app-controlled sockets using ESP32, Firebase, and Blynk. Enabled real-time power usage monitoring and remote control of appliances demonstrating energy savings and smart home integration.</p>
+        <div class="proj-stack"><span>ESP32</span><span>Firebase</span><span>Blynk</span><span>IoT</span></div>
+      </div>
+
+      <div class="proj-card reveal d6">
+        <div class="proj-num">06</div>
+        <div class="proj-badge">IoT · RFID · Cloud Dashboard</div>
+        <div class="proj-title">Attendance Tracking System</div>
+        <p class="proj-desc">Built a cloud-integrated attendance system using ESP32 and RFID tags. Stored real-time log data in Firebase with a frontend dashboard for visualization. Tested with 50+ users for consistent accuracy and network reliability.</p>
+        <div class="proj-stack"><span>ESP32</span><span>RFID</span><span>Firebase</span><span>Dashboard</span></div>
+      </div>
+
+      <div class="proj-card reveal d7">
+        <div class="proj-num">07</div>
+        <div class="proj-badge">Robotics · Bluetooth</div>
+        <div class="proj-title">Mars Rover Prototype</div>
+        <p class="proj-desc">Constructed a 6-wheel rover with rocker-bogie suspension and Bluetooth control for terrain navigation. Capable of obstacle avoidance and smooth traversal over uneven surfaces. Simulated planetary mission environments for control accuracy.</p>
+        <div class="proj-stack"><span>Arduino</span><span>Bluetooth</span><span>Motor Drivers</span><span>Rocker-Bogie</span></div>
+      </div>
+
+      <div class="proj-card reveal d8">
+        <div class="proj-num">08</div>
+        <div class="proj-badge">Technoxian WRC 2024</div>
+        <div class="proj-title">Line Following Robot</div>
+        <p class="proj-desc">Assembled and coded a robot to follow a black path on contrasting surfaces using IR sensors and PID logic. Competed at Technoxian WRC 2024, achieving high-speed accuracy under test conditions.</p>
+        <div class="proj-stack"><span>Arduino</span><span>IR Sensors</span><span>PID</span><span>Embedded C</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ════ EXPERIENCE ════ -->
+<div class="stripe" id="experience">
+  <div class="sw">
+    <div class="sec-label reveal">03 — CAREER</div>
+    <h2 class="sec-title reveal">WORK<br>HISTORY</h2>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">MAY 2025 — JUN 2025 &nbsp;·&nbsp; REMOTE (UK)</div>
+        <div class="tl-role">Research Engineer</div>
+        <div class="tl-company">ZAS Institute Limited</div>
+        <ul class="tl-list">
+          <li>Designed and simulated PID controllers for motion-stable robotic systems with encoder feedback</li>
+          <li>Built and tested a straight-line navigation bot with real-time error correction achieving 95% linear accuracy</li>
+          <li>Conducted performance tests on 3 control models to analyze overshoot, response time, and drift</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">JUN 2024 — JUL 2024 &nbsp;·&nbsp; SHOLINGANALLUR, CHENNAI</div>
+        <div class="tl-role">Intern</div>
+        <div class="tl-company">Aatrlaz</div>
+        <ul class="tl-list">
+          <li>Worked in a 4-member team to develop an IoT-based kiosk system for smart canteen management</li>
+          <li>Designed 3D hardware models using SolidWorks and prototyped using Raspberry Pi + RFID modules</li>
+          <li>Built a secondary ESP32-based attendance system used in parallel for authentication</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">JUN 2022 &nbsp;·&nbsp; PERAMBUR, CHENNAI</div>
+        <div class="tl-role">Industrial Intern</div>
+        <div class="tl-company">Integral Coach Factory (ICF)</div>
+        <ul class="tl-list">
+          <li>Observed the complete train manufacturing process from raw materials to final assembly and testing</li>
+          <li>Studied integration of mechanical, electrical, and pneumatic subsystems</li>
+          <li>Understood quality control protocols, safety standards, and inspection procedures</li>
+          <li>Gained insights into industrial workflow and supply chain coordination</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ════ ACHIEVEMENTS ════ -->
+<div id="achievements">
+  <div class="sw">
+    <div class="sec-label reveal">04 — RECOGNITION</div>
+    <h2 class="sec-title reveal">AWARDS &amp;<br>ACHIEVEMENTS</h2>
+    <div class="ach-grid">
+      <div class="ach-card reveal d1">
+        <div class="ach-icon">🥇</div>
+        <div>
+          <div class="ach-title">Smart India Hackathon 2023 — Title Winner</div>
+          <div class="ach-desc">Borewell Rescue Robot won national recognition. Outperformed 500+ teams across India.</div>
+        </div>
+      </div>
+      <div class="ach-card reveal d2">
+        <div class="ach-icon">🏆</div>
+        <div>
+          <div class="ach-title">Unplugged 1.0 — Title Winner</div>
+          <div class="ach-desc">Engineered an Automated Agriculture Monitoring System. Secured 1st place among campus teams.</div>
+        </div>
+      </div>
+      <div class="ach-card reveal d3">
+        <div class="ach-icon">🥈</div>
+        <div>
+          <div class="ach-title">Unplugged 2.0 — Runner-up (National)</div>
+          <div class="ach-desc">Built a Smart City Automation Model with IoT, AI &amp; GIS. Awarded 2nd place nationally.</div>
+        </div>
+      </div>
+      <div class="ach-card reveal d4">
+        <div class="ach-icon">⭐</div>
+        <div>
+          <div class="ach-title">PALS InnoWAH 2024 — Special Jury Award</div>
+          <div class="ach-desc">IoT innovation demonstrated at IIT Madras-backed expo. Received special jury recognition.</div>
+        </div>
+      </div>
+      <div class="ach-card reveal d5">
+        <div class="ach-icon">🚜</div>
+        <div>
+          <div class="ach-title">SAE TIFAN — Finalist</div>
+          <div class="ach-desc">Vegetable Transplanter Robot for farm automation. Reached finals among 150+ teams across India.</div>
+        </div>
+      </div>
+      <div class="ach-card reveal d6">
+        <div class="ach-icon">🤖</div>
+        <div>
+          <div class="ach-title">SAE TIFAN 2026 — Top 20</div>
+          <div class="ach-desc">Gantry Pick-and-Place System reached Top 20 nationally in the mechanical automation challenge.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ════ EDUCATION ════ -->
+<div class="stripe" id="education">
+  <div class="sw">
+    <div class="sec-label reveal">05 — ACADEMICS</div>
+    <h2 class="sec-title reveal">EDUCATION<br>PROFILE</h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div>
+          <div class="edu-deg">B.Tech — Mechatronics Engineering</div>
+          <div class="edu-school">Hindustan Institute of Technology and Science, Padur &nbsp;·&nbsp; 2022–2026</div>
+          <div class="edu-courses">Control Systems · Electrical Machines &amp; Drives · Robotics Engineering · Embedded Systems &amp; Microcontrollers · Industrial Automation &amp; PLC · Sensors and Instrumentation</div>
+        </div>
+        <div><div class="edu-score">7.53<span>GPA</span></div></div>
+      </div>
+      <div class="edu-card reveal">
+        <div>
+          <div class="edu-deg">Higher Secondary Certificate (HSC)</div>
+          <div class="edu-school">Zion Matriculation Higher Secondary School, Chennai &nbsp;·&nbsp; Tamil Nadu State Board &nbsp;·&nbsp; 2022</div>
+        </div>
+        <div><div class="edu-score">67.8%<span>Score</span></div></div>
+      </div>
+      <div class="edu-card reveal">
+        <div>
+          <div class="edu-deg">Secondary School (SSLC)</div>
+          <div class="edu-school">Zion Matriculation Higher Secondary School, Chennai &nbsp;·&nbsp; Tamil Nadu State Board &nbsp;·&nbsp; 2020</div>
+        </div>
+        <div><div class="edu-score">70.8%<span>Score</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- ════ CONTACT ════ -->
+<div id="contact">
+  <div class="sw">
+    <div class="sec-label reveal">06 — CONNECT</div>
+    <h2 class="sec-title reveal">GET IN<br>TOUCH</h2>
+    <div class="contact-box reveal">
+      <div class="contact-info">
+        <div class="ci-item">
+          <div class="ci-icon">📍</div>
+          <div class="ci-detail"><strong>LOCATION</strong>Chennai, India — 600064</div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">📱</div>
+          <div class="ci-detail"><strong>PHONE</strong><a href="tel:+917010099085">+91 7010099085</a></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">✉️</div>
+          <div class="ci-detail"><strong>EMAIL</strong><a href="mailto:mahesh2332005@gmail.com">mahesh2332005@gmail.com</a></div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">🔗</div>
+          <div class="ci-detail"><strong>LINKEDIN</strong><a href="https://linkedin.com/in/maheshkumar23" target="_blank" rel="noopener">linkedin.com/in/maheshkumar23</a></div>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <div class="cc-headline">LET'S BUILD<br><em>SOMETHING</em><br>GREAT.</div>
+        <p class="cc-sub">Open to internships, full-time roles, and collaborative engineering projects in automation, robotics, and embedded systems.</p>
+        <button class="btn-pri" id="openModal" style="width:fit-content;border:none">SEND MESSAGE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="footer-brand">MAHESH KUMAR S</div>
+  <div class="footer-text">© 2025 · MECHATRONICS ENGINEER · CHENNAI</div>
+  <div class="footer-text">BUILT WITH PASSION ♥</div>
+</footer>
+
+<script>
+/* ── THEME TOGGLE ── */
+const html = document.documentElement;
+const tBtn = document.getElementById('tBtn');
+const tlbl = document.getElementById('tlbl');
+tBtn.addEventListener('click', () => {
+  const dark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', dark ? 'light' : 'dark');
+  tlbl.textContent = dark ? 'LIGHT' : 'DARK';
+});
+
+/* ── CURSOR GLOW ── */
+const cglow = document.getElementById('cglow');
+let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animGlow() {
+  cglow.style.left = mx + 'px';
+  cglow.style.top = my + 'px';
+  requestAnimationFrame(animGlow);
+})();
+
+/* ── IMAGE LOAD / FALLBACK ── */
+const heroPhoto = document.getElementById('heroPhoto');
+const photoFallback = document.getElementById('photoFallback');
+heroPhoto.addEventListener('load', () => {
+  photoFallback.style.display = 'none';
+});
+heroPhoto.addEventListener('error', () => {
+  // Try alternate URL format on error
+  if (!heroPhoto.dataset.retried) {
+    heroPhoto.dataset.retried = '1';
+    heroPhoto.src = 'https://res.cloudinary.com/dfol7xlwr/image/upload/v1753001644/WhatsApp_Image_2025-07-20_at_13.52.54_c81f6d16_lntz11.jpg';
+  } else {
+    photoFallback.querySelector('p').textContent = 'MAHESH KUMAR';
+  }
+});
+// If image is already cached
+if (heroPhoto.complete && heroPhoto.naturalHeight !== 0) {
+  photoFallback.style.display = 'none';
+}
+
+/* ── SCROLL REVEAL ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── NAV ACTIVE ── */
+const sections = document.querySelectorAll('[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) cur = s.id; });
+  navAs.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : '';
+  });
+}, { passive: true });
+
+/* ── MODAL ── */
+const overlay = document.getElementById('modalOverlay');
+const openBtn = document.getElementById('openModal');
+const closeBtn = document.getElementById('modalClose');
+
+function openModal() {
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+openBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── FORM SUBMIT VIA FETCH ── */
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formMsg = document.getElementById('formMsg');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+  formMsg.className = 'form-msg';
+  formMsg.style.display = 'none';
+
+  try {
+    const data = new FormData(form);
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      formMsg.textContent = '✓ Message sent! I\'ll get back to you soon.';
+      formMsg.className = 'form-msg success';
+      form.reset();
+      setTimeout(closeModal, 2500);
+    } else {
+      throw new Error('Server error');
+    }
+  } catch {
+    formMsg.textContent = '✕ Something went wrong. Please email me directly.';
+    formMsg.className = 'form-msg error';
+  }
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Send Message';
+});
+</script>
+</body>
+</html>
